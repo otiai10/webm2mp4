@@ -1,7 +1,9 @@
 package goavcodec
 
 import (
+	"fmt"
 	"io/ioutil"
+	"os"
 	"os/exec"
 )
 
@@ -17,14 +19,22 @@ type Client struct {
 }
 
 // NewClient looks path for `ffmpeg` and returns initialized Client.
-func NewClient() (*Client, error) {
+func NewClient(binpath ...string) (*Client, error) {
+	if len(binpath) != 0 {
+		info, err := os.Stat(binpath[0])
+		if err != nil {
+			return nil, err
+		}
+		if info.Mode() < 0111 {
+			return nil, fmt.Errorf("path specified with `%s` is not executable", binpath[0])
+		}
+		return &Client{bin: binpath[0]}, nil
+	}
 	bin, err := exec.LookPath(avconv)
 	if err != nil {
 		return nil, err
 	}
-	return &Client{
-		bin: bin,
-	}, nil
+	return &Client{bin: bin}, nil
 }
 
 // Convert just converts src to dest with using `ffmpeg -i`

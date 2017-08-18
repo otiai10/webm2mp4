@@ -40,7 +40,9 @@ func Convert(w http.ResponseWriter, r *http.Request) {
 
 	destpath := source.Name() + ".mp4"
 
-	client, err := goavcodec.NewClient()
+	// TODO: resolve binary path dynamically
+	binpath := "/app/.apt/usr/bin/avconv"
+	client, err := goavcodec.NewClient(binpath)
 	if err != nil {
 		render.JSON(http.StatusInternalServerError, marmoset.P{"message": err.Error()})
 		return

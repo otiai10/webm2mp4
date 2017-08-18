@@ -5,7 +5,7 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/otiai10/goavcodec/v0/goavcodec",
-			"Rev": "60758a52ca4130b088c0831fe6df6bcdfb6aab7d"
+			"Rev": "e28ab8e202fe4a4b101fae135b484939f7edc5b3"
 		},
 		{
 			"ImportPath": "github.com/otiai10/marmoset",
