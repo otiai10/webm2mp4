@@ -27,6 +27,7 @@ func main() {
 
 	// API
 	r.GET("/status", controllers.Status)
+	r.POST("/upload", controllers.Convert)
 
 	r.GET("/", controllers.Index)
 	r.Static("/assets", assetpath())
