@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/otiai10/marmoset"
 
@@ -20,7 +21,11 @@ func main() {
 
 	logger = log.New(os.Stdout, fmt.Sprintf("[%s] ", config.AppName()), 0)
 
-	marmoset.LoadViews("./views")
+	if cwd, err := filepath.Abs(filepath.Dir(os.Args[0])); err != nil {
+		panic(err)
+	} else {
+		marmoset.LoadViews(filepath.Join(cwd, "views"))
+	}
 
 	r := marmoset.NewRouter()
 
