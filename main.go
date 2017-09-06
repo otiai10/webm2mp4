@@ -8,7 +8,6 @@ import (
 
 	"github.com/otiai10/marmoset"
 
-	"github.com/otiai10/webm2mp4/config"
 	"github.com/otiai10/webm2mp4/controllers"
 )
 
@@ -16,7 +15,7 @@ var logger *log.Logger
 
 func main() {
 
-	logger = log.New(os.Stdout, fmt.Sprintf("[%s] ", config.AppName()), 0)
+	logger = log.New(os.Stdout, fmt.Sprintf("[%s] ", "webm2mp4"), 0)
 
 	marmoset.LoadViews("./app/views")
 
@@ -29,7 +28,8 @@ func main() {
 	r.GET("/", controllers.Index)
 	r.Static("/assets", "./app/assets")
 
-	logger.Printf("listening on port %s", config.Port())
-	err := http.ListenAndServe(config.Port(), r)
+	port := os.Getenv("PORT")
+	logger.Printf("listening on port %s", port)
+	err := http.ListenAndServe(":"+port, r)
 	logger.Println(err)
 }

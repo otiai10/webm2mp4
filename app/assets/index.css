@@ -1,7 +1,0 @@
-
-div#progress-bar {
-  height: 8px;
-  background-color: #9b4dca;
-  width: 0px;
-  transition: all 0.2s;
-}

@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <!-- Google Fonts -->
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-  <!-- CSS Reset -->
-  <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
-  <!-- Milligram CSS minified -->
-  <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
-  <link rel="stylesheet" href="/assets/index.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.AppName}}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css">
 </head>
 <body>
-  <main class="wrapper">
-    <nav class="navigation">
-      <section class="container">
-        <h1 class="title navigation-title">webm2mp4</h1>
-      </section>
-    </nav>
-    <section class="container">
-      <div class="form">
-        <div class="row">
-          <div class="column">
-            <input id="source" type="file" accept="video/webm" />
-            <button id="submit" class="button-black button-outline">CONVERT</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="column">
-          <div id="progress-bar"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="column">
-          <div id="progress-message"></div>
-        </div>
-      </div>
-    </section>
-  </main>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        {{.AppName}}
+      </h1>
+      <p class="subtitle">
+        The easiest way to convert WebM to MP4.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="margin-bottom: 16px;">
+      <input type="file" />
+    </div>
+    <div class="container" id="buttons">
+      <a class="button is-primary" id="submit">Convert</a>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="">
+      <a class="button is-primary is-outlined">
+        <span class="icon">
+          <i class="fa fa-github"></i>
+        </span>
+        <span>https://github.com/otiai10/webm2mp4</span>
+      </a>
+    </div>
+  </section>
   <script type="text/javascript" src="/assets/index.js"></script>
 </body>
 </html>

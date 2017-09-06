@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/otiai10/marmoset"
-	"github.com/otiai10/webm2mp4/config"
 
 	"github.com/otiai10/goavcodec/v0/goavcodec"
 )
@@ -23,7 +22,7 @@ func Convert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	source, err := ioutil.TempFile("", config.AppName()+"_"+h.Filename+"_")
+	source, err := ioutil.TempFile("", "webm2mp4"+"_"+h.Filename+"_")
 	if err != nil {
 		render.JSON(http.StatusBadRequest, marmoset.P{"message": err.Error()})
 		return

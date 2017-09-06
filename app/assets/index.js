@@ -1,21 +1,9 @@
 (function(){
 
-  var model = {
-    target: { loaded: 0, total:0, name: ''},
-  };
-
   var ui = {
-    source: document.querySelector('input[type=file]#source'),
-    submit: document.querySelector('button#submit'),
-    progress: {
-      bar:     document.querySelector('div#progress-bar'),
-      message: document.querySelector('div#progress-message'),
-    },
-    update: function() {
-      this.progress.message.innerText = "(" + model.target.loaded + "/" + model.target.total + ")" + " " + model.target.name;
-      var r = ((model.target.total) ? (model.target.loaded / model.target.total) : 0)
-      this.progress.bar.style.width = (r * 100) + "%";
-    },
+    buttons: document.querySelector('div#buttons'),
+    submit: document.querySelector('a#submit'),
+    source: document.querySelector('input[type=file]'),
   };
 
   var api = {
@@ -27,9 +15,6 @@
           resolve(xhr.response);
         };
       });
-      xhr.upload.onprogress = function(ev) {
-        model.target.loaded = ev.loaded;
-      };
       xhr.open(opt.method, url, true)
       if (opt.type) xhr.responseType = opt.type;
       opt.body ? xhr.send(opt.body) : xhr.send();
@@ -52,24 +37,20 @@
   };
 
   ui.submit.addEventListener('click', function() {
-    if (source.files.length == 0) return alert('No source file is set');
-    var file = source.files[0];
+    if (ui.source.files.length == 0) return alert('No source file is set');
+    var file = ui.source.files[0];
     api.convert(file).then(function(blob) {
       var url = URL.createObjectURL(blob);
-      window.open(url);
+      var a = document.createElement('a');
+      a.className = "button is-info";
+      a.download = "result.mp4";
+      a.href = url;
+      a.innerText = "Download";
+      a.addEventListener('click', function() { a.remove(); });
+      ui.buttons.appendChild(a);
     }).catch(function(err) {
       console.log("ERROR", err);
     });
-  });
-
-  ui.source.addEventListener('change', function() {
-    var file = source.files[0];
-    model.target = {
-      total: file.size,
-      loaded: 0,
-      name: file.name,
-    };
-    ui.update();
   });
 
 })();
