@@ -9,4 +9,4 @@ ADD . $GOPATH/src/github.com/otiai10/webm2mp4
 WORKDIR $GOPATH/src/github.com/otiai10/webm2mp4
 RUN go get ./...
 
-ENTRYPOINT $GOPATH/bin/webm2mp4
+CMD $GOPATH/bin/webm2mp4

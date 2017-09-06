@@ -35,9 +35,6 @@
       opt.body ? xhr.send(opt.body) : xhr.send();
       return p;
     },
-    test: function() {
-      return this.fetch("/upload", {});
-    },
     convert: function(file) {
       var data = new FormData();
       data.append('file', file);
