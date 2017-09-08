@@ -14,6 +14,14 @@
       if (a) a.remove();
     }
   };
+  ui.submit.startLoading = function() {
+    ui.submit.setAttribute('disabled', true);
+    ui.submit.className += ' is-loading';
+  };
+  ui.submit.endLoading = function() {
+    ui.submit.removeAttribute('disabled');
+    ui.submit.className = ui.submit.className.replace(/[ ]*is-loading[ ]*/, '');
+  };
 
   var api = {
     fetch: function(url, opt) {
@@ -48,8 +56,10 @@
   ui.submit.addEventListener('click', function() {
     if (ui.source.files.length == 0) return ui.error("No file specified")
     ui.reset();
+    ui.submit.startLoading();
     var file = ui.source.files[0];
     api.convert(file).then(function(blob) {
+      ui.submit.endLoading();
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.className = "button is-info";
@@ -60,6 +70,7 @@
       a.addEventListener('click', function() { a.remove(); });
       ui.buttons.appendChild(a);
     }).catch(function(err) {
+      ui.submit.endLoading();
       console.log("ERROR", err);
       ui.error(err.message || JSON.stringify(err, null, "\t"));
     });
