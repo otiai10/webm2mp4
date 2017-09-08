@@ -1,5 +1,10 @@
 (function(){
 
+  Promise.prototype.progress = function(onprogress) {
+    this.onprogress = onprogress;
+    return this;
+  };
+
   var ui = {
     buttons: document.querySelector('div#buttons'),
     submit:  document.querySelector('a#submit'),
@@ -26,6 +31,9 @@
   var api = {
     fetch: function(url, opt) {
       var xhr = new XMLHttpRequest();
+      xhr.upload.onprogress = function(ev) {
+        if (typeof p.onprogress == 'function') p.onprogress(ev);
+      };
       var p = new Promise(function(resolve, reject) {
         xhr.onload = function() {
           if (xhr.status >= 400) return reject(xhr.response);
@@ -58,7 +66,9 @@
     ui.reset();
     ui.submit.startLoading();
     var file = ui.source.files[0];
-    api.convert(file).then(function(blob) {
+    api.convert(file).progress(function(ev) {
+      console.log('Progress', ev);
+    }).then(function(blob) {
       ui.submit.endLoading();
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
