@@ -25,6 +25,7 @@
     <div class="container" id="buttons">
       <a class="button is-primary" id="submit">Convert</a>
     </div>
+    <div class="container" id="message" style="padding-top:16px;"></div>
   </section>
   <section class="section">
     <div class="container" style="">
@@ -36,6 +37,11 @@
       </a>
     </div>
   </section>
+  <script type="text/template" id="message-danger">
+    <article class="message is-warning is-small">
+      <div class="message-body" id="message-body">#{message}</div>
+    </article>
+  </script>
   <script type="text/javascript" src="/assets/index.js"></script>
 </body>
 </html>

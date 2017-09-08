@@ -2,8 +2,17 @@
 
   var ui = {
     buttons: document.querySelector('div#buttons'),
-    submit: document.querySelector('a#submit'),
-    source: document.querySelector('input[type=file]'),
+    submit:  document.querySelector('a#submit'),
+    source:  document.querySelector('input[type=file]'),
+    message: document.querySelector('div#message'),
+    error: function(msg) {
+      ui.message.innerHTML = document.querySelector('script#message-danger').innerHTML.replace('#{message}', msg);
+    },
+    reset: function() {
+      ui.message.innerHTML = '';
+      var a = document.querySelector('a#download');
+      if (a) a.remove();
+    }
   };
 
   var api = {
@@ -37,7 +46,8 @@
   };
 
   ui.submit.addEventListener('click', function() {
-    if (ui.source.files.length == 0) return alert('No source file is set');
+    if (ui.source.files.length == 0) return ui.error("No file specified")
+    ui.reset();
     var file = ui.source.files[0];
     api.convert(file).then(function(blob) {
       var url = URL.createObjectURL(blob);
@@ -46,10 +56,12 @@
       a.download = "result.mp4";
       a.href = url;
       a.innerText = "Download";
+      a.id = "download";
       a.addEventListener('click', function() { a.remove(); });
       ui.buttons.appendChild(a);
     }).catch(function(err) {
       console.log("ERROR", err);
+      ui.error(err.message || JSON.stringify(err, null, "\t"));
     });
   });
 
