@@ -45,7 +45,18 @@ func Convert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = client.Convert(source.Name(), destpath); err != nil {
+	opts := new(goavcodec.Options)
+	if start := r.FormValue("start"); start != "" {
+		opts.Set("start", start)
+	}
+	if duration := r.FormValue("duration"); duration != "" {
+		opts.Set("duration", duration)
+	}
+	if speed := r.FormValue("speed"); speed != "" {
+		opts.Set("speed", speed)
+	}
+
+	if err = client.Convert(source.Name(), destpath, opts); err != nil {
 		render.JSON(http.StatusInternalServerError, marmoset.P{"message": err.Error()})
 		return
 	}

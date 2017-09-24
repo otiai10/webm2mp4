@@ -5,11 +5,18 @@
     return this;
   };
 
+  var timeExpressionToSeconds = function(str) {
+    return str.split(":").reverse().reduce(function(sum, v, i) { return sum + parseInt(v) * Math.pow(60, i); }, 0) + "s";
+  };
+
   var ui = {
     buttons: document.querySelector('div#buttons'),
     submit:  document.querySelector('a#submit'),
     source:  document.querySelector('input[type=file]'),
     message: document.querySelector('div#message'),
+    start:   document.querySelector('input#start'),
+    duration:document.querySelector('input#duration'),
+    speed:   document.querySelector('input#speed'),
     error: function(msg) {
       ui.message.innerHTML = document.querySelector('script#message-danger').innerHTML.replace('#{message}', msg);
     },
@@ -45,9 +52,10 @@
       opt.body ? xhr.send(opt.body) : xhr.send();
       return p;
     },
-    convert: function(file) {
+    convert: function(file, options) {
       var data = new FormData();
       data.append('file', file);
+      Object.keys(options || {}).map(function(key) {data.append(key, options[key]); });
       return this.fetch('/upload', {method:'POST',body:data,type:'blob'})
         .then(function(response) {
           return Promise.resolve(response);
@@ -66,7 +74,11 @@
     ui.reset();
     ui.submit.startLoading();
     var file = ui.source.files[0];
-    api.convert(file).progress(function(ev) {
+    var options = {};
+    if (ui.speed.value !== "")    options.speed = ui.speed.value;
+    if (ui.start.value !== "")    options.start = timeExpressionToSeconds(ui.start.value);
+    if (ui.duration.value !== "") options.duration = timeExpressionToSeconds(ui.duration.value);
+    api.convert(file, options).progress(function(ev) {
       console.log('Progress', ev);
     }).then(function(blob) {
       ui.submit.endLoading();
