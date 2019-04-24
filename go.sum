@@ -1,0 +1,4 @@
+github.com/otiai10/goavcodec v0.0.0-20170924083341-758c3a0465b0 h1:IUIzVIhV/NmKsYGBrGmYgC7ZZYdmjy6UR/zOcxUdufA=
+github.com/otiai10/goavcodec v0.0.0-20170924083341-758c3a0465b0/go.mod h1:WtVl7syq/OANAOqWoqEw+2qzxM9PmHo+87s/TtGto1U=
+github.com/otiai10/marmoset v0.4.0 h1:Hg59lQI7qQowBEdsAJ/+VDTEospTBzXX/A1Gsw4mlvA=
+github.com/otiai10/marmoset v0.4.0/go.mod h1:t2q6dXWZ9YcFdRREDApX4bCmfQnL3isJ2dgl8ychlXg=
